@@ -9,7 +9,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include "os.h"
+#include <FreeRTOS.h>
 
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
@@ -117,7 +117,6 @@ typedef int8_t s8;
 #define WPA_TYPES_DEFINED
 #endif /* !WPA_TYPES_DEFINED */
 
-
 /* Define platform specific byte swapping macros */
 
 #if defined(__CYGWIN__) || defined(CONFIG_NATIVE_WINDOWS)
@@ -191,7 +190,7 @@ static inline unsigned int wpa_swap_32(unsigned int v)
 #define WORDS_BIGENDIAN
 #endif
 #else
-#error Could not determine CPU byte order
+//#error Could not determine CPU byte order
 #endif
 
 #define WPA_BYTE_SWAP_DEFINED
@@ -499,7 +498,7 @@ static inline int is_multicast_ether_addr(const u8 *a)
 
 #define broadcast_ether_addr (const u8 *) "\xff\xff\xff\xff\xff\xff"
 
-#include "wpa_debug.h"
+//#include "wpa_debug.h"
 
 
 struct wpa_freq_range_list {
