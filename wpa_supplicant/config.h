@@ -41,9 +41,9 @@
 #define DEFAULT_P2P_GO_CTWINDOW 0
 
 #include "config_ssid.h"
-#include "wps/wps.h"
-#include "common/ieee802_11_defs.h"
-#include "common/ieee802_11_common.h"
+//#include "wps/wps.h"
+#include "ieee802_11_defs.h"
+//#include "common/ieee802_11_common.h"
 
 
 struct wpa_cred {
@@ -655,7 +655,7 @@ struct wpa_config {
 	/**
 	 * device_type - Primary Device Type (WPS)
 	 */
-	u8 device_type[WPS_DEV_TYPE_LEN];
+//	u8 device_type[WPS_DEV_TYPE_LEN];
 
 	/**
 	 * config_methods - Config Methods
@@ -699,7 +699,7 @@ struct wpa_config {
 	/**
 	 * sec_device_types - Secondary Device Types (P2P)
 	 */
-	u8 sec_device_type[MAX_SEC_DEVICE_TYPES][WPS_DEV_TYPE_LEN];
+//	u8 sec_device_type[MAX_SEC_DEVICE_TYPES][WPS_DEV_TYPE_LEN];
 	int num_sec_device_types;
 
 	int p2p_listen_reg_class;
@@ -948,7 +948,7 @@ struct wpa_config {
 	 */
 	int p2p_go_max_inactivity;
 
-	struct hostapd_wmm_ac_params wmm_ac_params[4];
+//	struct hostapd_wmm_ac_params wmm_ac_params[4];
 
 	/**
 	 * auto_interworking - Whether to use network selection automatically
