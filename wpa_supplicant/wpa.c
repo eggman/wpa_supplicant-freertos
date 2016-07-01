@@ -9,6 +9,9 @@
 #include "includes.h"
 
 #include "common.h"
+#include "os.h"
+
+#include "common.h"
 #include "crypto/aes_wrap.h"
 #include "crypto/crypto.h"
 #include "crypto/random.h"

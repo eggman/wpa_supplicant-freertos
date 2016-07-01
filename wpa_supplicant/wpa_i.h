@@ -9,7 +9,7 @@
 #ifndef WPA_I_H
 #define WPA_I_H
 
-#include "utils/list.h"
+#include "list.h"
 
 struct wpa_peerkey;
 struct wpa_tdls_peer;
