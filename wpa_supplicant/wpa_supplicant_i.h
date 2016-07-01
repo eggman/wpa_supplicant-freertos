@@ -9,13 +9,13 @@
 #ifndef WPA_SUPPLICANT_I_H
 #define WPA_SUPPLICANT_I_H
 
-#include "utils/list.h"
-#include "common/defs.h"
-#include "common/sae.h"
-#include "common/wpa_ctrl.h"
-#include "wps/wps_defs.h"
+#include "list.h"
+//#include "common/defs.h"
+//#include "common/sae.h"
+//#include "common/wpa_ctrl.h"
+//#include "wps/wps_defs.h"
 #include "config_ssid.h"
-#include "wmm_ac.h"
+//#include "wmm_ac.h"
 
 extern const char *const wpa_supplicant_version;
 extern const char *const wpa_supplicant_license;
@@ -368,7 +368,7 @@ struct wps_ap_info {
 	unsigned int tries;
 	struct os_reltime last_attempt;
 	unsigned int pbc_active;
-	u8 uuid[WPS_UUID_LEN];
+//	u8 uuid[WPS_UUID_LEN];
 };
 
 struct wpa_ssid_value {
@@ -963,7 +963,7 @@ struct wpa_supplicant {
 
 	unsigned int ext_work_id;
 
-	struct wpabuf *vendor_elem[NUM_VENDOR_ELEM_FRAMES];
+//	struct wpabuf *vendor_elem[NUM_VENDOR_ELEM_FRAMES];
 
 #ifdef CONFIG_TESTING_OPTIONS
 	struct l2_packet_data *l2_test;
@@ -972,7 +972,7 @@ struct wpa_supplicant {
 #endif /* CONFIG_TESTING_OPTIONS */
 
 	struct wmm_ac_assoc_data *wmm_ac_assoc_info;
-	struct wmm_tspec_element *tspecs[WMM_AC_NUM][TS_DIR_IDX_COUNT];
+//	struct wmm_tspec_element *tspecs[WMM_AC_NUM][TS_DIR_IDX_COUNT];
 	struct wmm_ac_addts_request *addts_request;
 	u8 wmm_ac_last_dialog_token;
 	struct wmm_tspec_element *last_tspecs;
