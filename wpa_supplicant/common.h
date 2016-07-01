@@ -499,6 +499,9 @@ static inline int is_multicast_ether_addr(const u8 *a)
 #define broadcast_ether_addr (const u8 *) "\xff\xff\xff\xff\xff\xff"
 
 //#include "wpa_debug.h"
+enum {
+        MSG_EXCESSIVE, MSG_MSGDUMP, MSG_DEBUG, MSG_INFO, MSG_WARNING, MSG_ERROR
+};
 
 
 struct wpa_freq_range_list {
