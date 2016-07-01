@@ -16,6 +16,11 @@ struct os_time {
 	os_time_t usec;
 };
 
+struct os_reltime {
+        os_time_t sec;
+        os_time_t usec;
+};
+
 /**
  * os_get_random - Get cryptographically strong pseudo random data
  * @buf: Buffer for pseudo random data
