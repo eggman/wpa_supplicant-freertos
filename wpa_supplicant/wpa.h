@@ -418,4 +418,141 @@ int wpa_tdls_disable_chan_switch(struct wpa_sm *sm, const u8 *addr);
 
 int wpa_wnmsleep_install_key(struct wpa_sm *sm, u8 subelem_id, u8 *buf);
 
+/* SIOCSIWENCODEEXT definitions */
+#define SIOCSIWENCODEEXT 0x8B34     /* set encoding token & mode */
+#define IW_ENCODE_SEQ_MAX_SIZE	8
+/* struct iw_encode_ext ->alg */
+#define IW_ENCODE_ALG_NONE	0
+#define IW_ENCODE_ALG_WEP	1
+#define IW_ENCODE_ALG_TKIP	2
+#define IW_ENCODE_ALG_CCMP	3
+#define IW_ENCODE_ALG_PMK	4
+#define IW_ENCODE_ALG_AES_CMAC	5
+/* struct iw_encode_ext ->ext_flags */
+#define IW_ENCODE_EXT_TX_SEQ_VALID	0x00000001
+#define IW_ENCODE_EXT_RX_SEQ_VALID	0x00000002
+#define IW_ENCODE_EXT_GROUP_KEY		0x00000004
+#define IW_ENCODE_EXT_SET_TX_KEY	0x00000008
+
+/* Flags for encoding (along with the token) */
+#define IW_ENCODE_INDEX		0x00FF	/* Token index (if needed) */
+#define IW_ENCODE_FLAGS		0xFF00	/* Flags defined below */
+#define IW_ENCODE_MODE		0xF000	/* Modes defined below */
+#define IW_ENCODE_DISABLED	0x8000	/* Encoding disabled */
+#define IW_ENCODE_ENABLED	0x0000	/* Encoding enabled */
+#define IW_ENCODE_RESTRICTED	0x4000	/* Refuse non-encoded packets */
+#define IW_ENCODE_OPEN		0x2000	/* Accept non-encoded packets */
+#define IW_ENCODE_NOKEY		0x0800  /* Key is write only, so not present */
+#define IW_ENCODE_TEMP		0x0400  /* Temporary key */
+
+
+struct wpa_sm;
+struct wpa_ssid;
+struct wpa_config_blob;
+
+struct sockaddr {
+	unsigned short sa_family;	/* address family, AF_xxx	*/
+	char		sa_data[14];	/* 14 bytes of protocol address	*/
+};  //wp add
+
+#define	IFNAMSIZ	16
+
+ struct iw_request_info
+ {
+     unsigned short       cmd;        /* Wireless Extension command */
+     unsigned short       flags;      /* More to come ;-) */
+ };
+
+ struct	iw_param
+{
+	signed int		value;		/* The value of the parameter itself */
+	unsigned char	fixed;		/* Hardware should not use auto select */
+	unsigned char	disabled;	/* Disable the feature */
+	unsigned short	flags;		/* Various specifc flags (if any) */
+};
+
+struct	iw_point
+{
+	void 	*pointer;	/* Pointer to the data  (in user space) */
+	unsigned short		length;		/* number of fields or size in bytes */
+	unsigned short		flags;		/* Optional params */
+};
+
+struct	iw_freq
+{
+	signed int		m;		/* Mantissa */
+	signed short	e;		/* Exponent */
+	unsigned char	i;		/* List index (when in range struct) */
+	unsigned char	flags;		/* Flags (fixed/auto) */
+};
+
+struct	iw_quality
+{
+	unsigned char		qual;		/* link quality (%retries, SNR, missed beacons or better...) */
+	unsigned char		level;		/* signal level (dBm) */
+	unsigned char		noise;		/* noise level (dBm) */
+	unsigned char		updated;	/* Flags to know if updated */
+};
+
+union iwreq_data
+{
+	/* Config - generic */
+	char		name[IFNAMSIZ];
+	/* Name : used to verify the presence of  wireless extensions.
+	 * Name of the protocol/provider... */
+
+	struct iw_point	essid;		/* Extended network name */
+	struct iw_param	nwid;		/* network id (or domain - the cell) */
+	struct iw_freq	freq;		/* frequency or channel :
+					 * 0-1000 = channel
+					 * > 1000 = frequency in Hz */
+
+	struct iw_param	sens;		/* signal level threshold */
+	struct iw_param	bitrate;	/* default bit rate */
+	struct iw_param	txpower;	/* default transmit power */
+	struct iw_param	rts;		/* RTS threshold threshold */
+	struct iw_param	frag;		/* Fragmentation threshold */
+	unsigned int	mode;		/* Operation mode */
+	struct iw_param	retry;		/* Retry limits & lifetime */
+
+	struct iw_point	encoding;	/* Encoding stuff : tokens */
+	struct iw_param	power;		/* PM duration/timeout */
+	struct iw_quality qual;		/* Quality part of statistics */
+
+	struct sockaddr	ap_addr;	/* Access point address */
+	struct sockaddr	addr;		/* Destination address (hw/mac) */
+
+	struct iw_param	param;		/* Other small parameters */
+	struct iw_point	data;		/* Other large parameters */
+};
+
+struct	iwreq
+{
+	union
+	{
+		char	ifrn_name[IFNAMSIZ];	/* if name, e.g. "eth0" */
+	} ifr_ifrn;
+
+	/* Data part (defined just above) */
+	union iwreq_data	u;
+};
+
+
+//#define      DBUGPBUF
+#define ARPHRD_ETHER 	    1		/* Ethernet 10Mbps		*/
+
+struct	iw_encode_ext
+{
+	unsigned int		ext_flags; /* IW_ENCODE_EXT_* */
+	unsigned char		tx_seq[IW_ENCODE_SEQ_MAX_SIZE]; /* LSB first */
+	unsigned char		rx_seq[IW_ENCODE_SEQ_MAX_SIZE]; /* LSB first */
+	struct sockaddr	addr; /* ff:ff:ff:ff:ff:ff for broadcast/multicast
+			       * (group) keys or unicast address for
+			       * individual keys */
+	unsigned short		alg; /* IW_ENCODE_ALG_* */
+	unsigned short		key_len;
+	unsigned char		key[1];		  //wp key[0]´ýÐÞ¸Ä
+};
+
+
 #endif /* WPA_H */
