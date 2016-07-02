@@ -16,6 +16,11 @@
 #define BUILD_CONFIG_H
 
 /* Insert configuration defines, e.g., #define EAP_MD5, here, if needed. */
+#ifdef USE_INTERNAL_CRYPTO
+#define CONFIG_TLS_INTERNAL_CLIENT
+#define CONFIG_INTERNAL_LIBTOMMATH
+#define CONFIG_CRYPTO_INTERNAL
+#endif /* USE_INTERNAL_CRYPTO */
 
 #ifdef CONFIG_WIN32_DEFAULTS
 #define CONFIG_NATIVE_WINDOWS
