@@ -19,7 +19,7 @@
 //#include "eapol_supp/eapol_supp_sm.h"
 #include "wpa.h"
 #include "eloop.h"
-#include "preauth.h"
+//#include "preauth.h"
 #include "pmksa_cache.h"
 #include "wpa_i.h"
 #include "wpa_ie.h"
