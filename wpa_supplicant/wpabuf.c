@@ -39,7 +39,9 @@ static void wpabuf_overflow(const struct wpabuf *buf, size_t len)
 	wpa_printf(MSG_ERROR, "wpabuf %p (size=%lu used=%lu) overflow len=%lu",
 		   buf, (unsigned long) buf->size, (unsigned long) buf->used,
 		   (unsigned long) len);
+#ifdef WPA_TRACE
 	wpa_trace_show("wpabuf overflow");
+#endif /* WPA_TRACE */
 	abort();
 }
 
