@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #include "common.h"
-#include "trace.h"
+//#include "trace.h"
 #include "wpabuf.h"
 
 #ifdef WPA_TRACE
@@ -299,6 +299,7 @@ struct wpabuf * wpabuf_zeropad(struct wpabuf *buf, size_t len)
 
 void wpabuf_printf(struct wpabuf *buf, char *fmt, ...)
 {
+#if 0
 	va_list ap;
 	void *tmp = wpabuf_mhead_u8(buf) + wpabuf_len(buf);
 	int res;
@@ -309,4 +310,5 @@ void wpabuf_printf(struct wpabuf *buf, char *fmt, ...)
 	if (res < 0 || (size_t) res >= buf->size - buf->used)
 		wpabuf_overflow(buf, res);
 	buf->used += res;
+#endif
 }
