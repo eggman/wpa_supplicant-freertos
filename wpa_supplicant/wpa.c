@@ -16,7 +16,7 @@
 #include "crypto.h"
 #include "random.h"
 #include "ieee802_11_defs.h"
-#include "eapol_supp/eapol_supp_sm.h"
+//#include "eapol_supp/eapol_supp_sm.h"
 #include "wpa.h"
 #include "eloop.h"
 #include "preauth.h"

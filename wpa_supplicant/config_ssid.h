@@ -11,7 +11,7 @@
 
 #include "defs.h"
 #include "list.h"
-#include "eap_peer/eap_config.h"
+//#include "eap_peer/eap_config.h"
 
 
 #define DEFAULT_EAP_WORKAROUND ((unsigned int) -1)
