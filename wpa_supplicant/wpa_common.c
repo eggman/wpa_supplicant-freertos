@@ -9,7 +9,7 @@
 #include "includes.h"
 
 #include "common.h"
-#include "md5.h"
+//#include "md5.h"
 #include "sha1.h"
 //#include "crypto/sha256.h"
 //#include "crypto/sha384.h"
@@ -70,14 +70,14 @@ int wpa_eapol_key_mic(const u8 *key, size_t key_len, int akmp, int ver,
 	u8 hash[SHA1_MAC_LEN];
 
 	switch (ver) {
-#ifndef CONFIG_FIPS
-	case WPA_KEY_INFO_TYPE_HMAC_MD5_RC4:
-		return hmac_md5(key, key_len, buf, len, mic);
-#endif /* CONFIG_FIPS */
+//#ifndef CONFIG_FIPS
+//	case WPA_KEY_INFO_TYPE_HMAC_MD5_RC4:
+//		return hmac_md5(key, key_len, buf, len, mic);
+//#endif /* CONFIG_FIPS */
 	case WPA_KEY_INFO_TYPE_HMAC_SHA1_AES:
 		if (hmac_sha1(key, key_len, buf, len, hash))
 			return -1;
-		os_memcpy(mic, hash, MD5_MAC_LEN);
+		os_memcpy(mic, hash, SHA1_MAC_LEN);
 		break;
 #if defined(CONFIG_IEEE80211R) || defined(CONFIG_IEEE80211W)
 	case WPA_KEY_INFO_TYPE_AES_128_CMAC:

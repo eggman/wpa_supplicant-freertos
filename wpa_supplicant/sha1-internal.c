@@ -11,7 +11,7 @@
 #include "common.h"
 #include "sha1.h"
 #include "sha1_i.h"
-#include "md5.h"
+//#include "md5.h"
 #include "crypto.h"
 
 typedef struct SHA1Context SHA1_CTX;
