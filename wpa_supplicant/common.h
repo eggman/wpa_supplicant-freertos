@@ -11,6 +11,36 @@
 
 #include <FreeRTOS.h>
 
+#define bswap16(x) ((((x) & 0xff) << 8) | (((x) >> 8) & 0xff))
+
+#define bswap32(x) ((((x) & 0xff) << 24) | (((x) & 0xff00) << 8) \
+        | (((x) >> 8) & 0xff00) | (((x) >> 24) & 0xff))
+
+#define bswap64(x) (((x) << 56) | (((x) & 0xff00) << 40) \
+        | (((x) & 0xff0000) << 24) | (((x) & 0xff000000ull) << 8) \
+        | (((x) >> 8) & 0xff000000ull) | (((x) >> 24) & 0xff0000) \
+        | (((x) >> 40) & 0xff00) | ((x) >> 56))
+
+#define __BYTE_ORDER	BYTE_ORDER
+#define __LITTLE_ENDIAN	LITTLE_ENDIAN
+#define __BIG_ENDIAN	BIG_ENDIAN
+#define bswap_16 bswap16
+#define bswap_32 bswap32
+#define bswap_64 bswap64
+
+#define inline __inline
+
+inline unsigned short wpa_swap_16(unsigned short v)
+{
+	return ((v & 0xff) << 8) | (v >> 8);
+}
+
+inline unsigned int wpa_swap_32(unsigned int v)
+{
+	return ((v & 0xff) << 24) | ((v & 0xff00) << 8) |
+		((v & 0xff0000) >> 8) | (v >> 24);
+}
+
 #if defined(__linux__) || defined(__GLIBC__)
 #include <endian.h>
 #include <byteswap.h>
@@ -159,6 +189,7 @@ static inline unsigned int wpa_swap_32(unsigned int v)
 #endif /* __BIG_ENDIAN */
 #endif /* __LITTLE_ENDIAN */
 #endif /* __BYTE_ORDER */
+
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #define le_to_host16(n) ((__force u16) (le16) (n))
