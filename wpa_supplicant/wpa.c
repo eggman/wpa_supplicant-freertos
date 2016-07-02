@@ -12,10 +12,10 @@
 #include "os.h"
 
 #include "common.h"
-#include "crypto/aes_wrap.h"
-#include "crypto/crypto.h"
-#include "crypto/random.h"
-#include "common/ieee802_11_defs.h"
+#include "aes_wrap.h"
+#include "crypto.h"
+#include "random.h"
+#include "ieee802_11_defs.h"
 #include "eapol_supp/eapol_supp_sm.h"
 #include "wpa.h"
 #include "eloop.h"
@@ -73,7 +73,7 @@ void wpa_eapol_key_send(struct wpa_sm *sm, const u8 *kck, size_t kck_len,
 	wpa_hexdump(MSG_DEBUG, "WPA: Derived Key MIC", key_mic, mic_len);
 	wpa_hexdump(MSG_MSGDUMP, "WPA: TX EAPOL-Key", msg, msg_len);
 	wpa_sm_ether_send(sm, dest, proto, msg, msg_len);
-	eapol_sm_notify_tx_eapol_key(sm->eapol);
+//	eapol_sm_notify_tx_eapol_key(sm->eapol);
 out:
 	os_free(msg);
 }
@@ -203,14 +203,15 @@ static int wpa_supplicant_get_pmk(struct wpa_sm *sm,
 		wpa_sm_set_pmk_from_pmksa(sm);
 		wpa_hexdump_key(MSG_DEBUG, "RSN: PMK from PMKSA cache",
 				sm->pmk, sm->pmk_len);
-		eapol_sm_notify_cached(sm->eapol);
+//		eapol_sm_notify_cached(sm->eapol);
 #ifdef CONFIG_IEEE80211R
 		sm->xxkey_len = 0;
 #endif /* CONFIG_IEEE80211R */
 	} else if (wpa_key_mgmt_wpa_ieee8021x(sm->key_mgmt) && sm->eapol) {
 		int res, pmk_len;
 		pmk_len = PMK_LEN;
-		res = eapol_sm_get_key(sm->eapol, sm->pmk, PMK_LEN);
+//		res = eapol_sm_get_key(sm->eapol, sm->pmk, PMK_LEN);
+		res = 0;
 		if (res) {
 			/*
 			 * EAP-LEAP is an exception from other EAP methods: it
@@ -563,9 +564,9 @@ static void wpa_supplicant_key_neg_complete(struct wpa_sm *sm,
 		wpa_sm_mlme_setprotection(
 			sm, addr, MLME_SETPROTECTION_PROTECT_TYPE_RX_TX,
 			MLME_SETPROTECTION_KEY_TYPE_PAIRWISE);
-		eapol_sm_notify_portValid(sm->eapol, TRUE);
-		if (wpa_key_mgmt_wpa_psk(sm->key_mgmt))
-			eapol_sm_notify_eap_success(sm->eapol, TRUE);
+//		eapol_sm_notify_portValid(sm->eapol, TRUE);
+//		if (wpa_key_mgmt_wpa_psk(sm->key_mgmt))
+//			eapol_sm_notify_eap_success(sm->eapol, TRUE);
 		/*
 		 * Start preauthentication after a short wait to avoid a
 		 * possible race condition between the data receive and key
@@ -573,7 +574,7 @@ static void wpa_supplicant_key_neg_complete(struct wpa_sm *sm,
 		 * likelihood of the first preauth EAPOL-Start frame getting to
 		 * the target AP.
 		 */
-		eloop_register_timeout(1, 0, wpa_sm_start_preauth, sm, NULL);
+//		eloop_register_timeout(1, 0, wpa_sm_start_preauth, sm, NULL);
 	}
 
 	if (sm->cur_pmksa && sm->cur_pmksa->opportunistic) {
@@ -648,9 +649,9 @@ static int wpa_supplicant_install_ptk(struct wpa_sm *sm,
 	os_memset(sm->ptk.tk, 0, WPA_TK_MAX_LEN);
 
 	if (sm->wpa_ptk_rekey) {
-		eloop_cancel_timeout(wpa_sm_rekey_ptk, sm, NULL);
-		eloop_register_timeout(sm->wpa_ptk_rekey, 0, wpa_sm_rekey_ptk,
-				       sm, NULL);
+//		eloop_cancel_timeout(wpa_sm_rekey_ptk, sm, NULL);
+//		eloop_register_timeout(sm->wpa_ptk_rekey, 0, wpa_sm_rekey_ptk,
+//				       sm, NULL);
 	}
 
 	return 0;
@@ -804,7 +805,7 @@ static int wpa_supplicant_pairwise_gtk(struct wpa_sm *sm,
 	return 0;
 }
 
-
+#if 0
 static int ieee80211w_set_keys(struct wpa_sm *sm,
 			       struct wpa_eapol_ie_parse *ie)
 {
@@ -846,7 +847,7 @@ static int ieee80211w_set_keys(struct wpa_sm *sm,
 	return 0;
 #endif /* CONFIG_IEEE80211W */
 }
-
+#endif
 
 static void wpa_report_ie_mismatch(struct wpa_sm *sm,
 				   const char *reason, const u8 *src_addr,
@@ -1223,7 +1224,7 @@ static void wpa_supplicant_process_3_of_4(struct wpa_sm *sm,
 		wpa_sm_mlme_setprotection(
 			sm, sm->bssid, MLME_SETPROTECTION_PROTECT_TYPE_RX,
 			MLME_SETPROTECTION_KEY_TYPE_PAIRWISE);
-		eapol_sm_notify_portValid(sm->eapol, TRUE);
+//		eapol_sm_notify_portValid(sm->eapol, TRUE);
 	}
 	wpa_sm_set_state(sm, WPA_GROUP_HANDSHAKE);
 
@@ -1238,11 +1239,13 @@ static void wpa_supplicant_process_3_of_4(struct wpa_sm *sm,
 		goto failed;
 	}
 
+#if 0
 	if (ieee80211w_set_keys(sm, &ie) < 0) {
 		wpa_msg(sm->ctx->msg_ctx, MSG_INFO,
 			"RSN: Failed to configure IGTK");
 		goto failed;
 	}
+#endif
 
 	if (ie.gtk)
 		wpa_sm_set_rekey_offload(sm);
@@ -1308,9 +1311,11 @@ static int wpa_supplicant_process_1_of_2_rsn(struct wpa_sm *sm,
 	}
 	os_memcpy(gd->gtk, ie.gtk + 2, ie.gtk_len - 2);
 
+#if 0
 	if (ieee80211w_set_keys(sm, &ie) < 0)
 		wpa_msg(sm->ctx->msg_ctx, MSG_INFO,
 			"RSN: Failed to configure IGTK");
+#endif
 
 	return 0;
 }
@@ -1808,7 +1813,7 @@ int wpa_sm_rx_eapol(struct wpa_sm *sm, const u8 *src_addr,
 		goto out;
 	}
 
-	eapol_sm_notify_lower_layer_success(sm->eapol, 0);
+//	eapol_sm_notify_lower_layer_success(sm->eapol, 0);
 	key_info = WPA_GET_BE16(key->key_info);
 	ver = key_info & WPA_KEY_INFO_TYPE_MASK;
 	if (ver != WPA_KEY_INFO_TYPE_HMAC_MD5_RC4 &&
@@ -2274,7 +2279,7 @@ void wpa_sm_notify_assoc(struct wpa_sm *sm, const u8 *bssid)
 		 * Clear portValid to kick EAPOL state machine to re-enter
 		 * AUTHENTICATED state to get the EAPOL port Authorized.
 		 */
-		eapol_sm_notify_portValid(sm->eapol, FALSE);
+//		eapol_sm_notify_portValid(sm->eapol, FALSE);
 		wpa_supplicant_key_neg_complete(sm, sm->bssid, 1);
 
 		/* Prepare for the next transition */
