@@ -9,8 +9,8 @@
 #ifndef CONFIG_SSID_H
 #define CONFIG_SSID_H
 
-#include "common/defs.h"
-#include "utils/list.h"
+#include "defs.h"
+#include "list.h"
 #include "eap_peer/eap_config.h"
 
 
