@@ -22,14 +22,14 @@
  * guaranteed to be secure for any of the security assumptions to hold.
  */
 
-#include "utils/includes.h"
+#include "includes.h"
 #ifdef __linux__
 #include <fcntl.h>
 #endif /* __linux__ */
 
-#include "utils/common.h"
-#include "utils/eloop.h"
-#include "crypto/crypto.h"
+#include "common.h"
+//#include "utils/eloop.h"
+#include "crypto.h"
 #include "sha1.h"
 #include "random.h"
 
@@ -364,6 +364,7 @@ static void random_read_entropy(void)
 
 static void random_write_entropy(void)
 {
+#if 0
 	char buf[RANDOM_ENTROPY_SIZE];
 	FILE *f;
 	u8 opr;
@@ -396,6 +397,7 @@ static void random_write_entropy(void)
 	wpa_printf(MSG_DEBUG, "random: Updated entropy file %s "
 		   "(own_pool_ready=%u)",
 		   random_entropy_file, own_pool_ready);
+#endif
 }
 
 
