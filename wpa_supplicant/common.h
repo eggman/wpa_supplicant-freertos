@@ -499,9 +499,39 @@ static inline int is_multicast_ether_addr(const u8 *a)
 #define broadcast_ether_addr (const u8 *) "\xff\xff\xff\xff\xff\xff"
 
 //#include "wpa_debug.h"
+#define WPA_ASSERT(a) do { } while (0)
+
 enum {
         MSG_EXCESSIVE, MSG_MSGDUMP, MSG_DEBUG, MSG_INFO, MSG_WARNING, MSG_ERROR
 };
+
+
+#define wpa_debug_print_timestamp() do { } while (0)
+#define wpa_printf(args...) do { } while (0)
+#define wpa_hexdump(l,t,b,le) do { } while (0)
+#define wpa_hexdump_buf(l,t,b) do { } while (0)
+#define wpa_hexdump_key(l,t,b,le) do { } while (0)
+#define wpa_hexdump_buf_key(l,t,b) do { } while (0)
+#define wpa_hexdump_ascii(l,t,b,le) do { } while (0)
+#define wpa_hexdump_ascii_key(l,t,b,le) do { } while (0)
+#define wpa_debug_open_file(p) do { } while (0)
+#define wpa_debug_close_file() do { } while (0)
+#define wpa_debug_setup_stdout() do { } while (0)
+#define wpa_dbg(args...) do { } while (0)
+
+#define wpa_msg(args...) do { } while (0)
+#define wpa_msg_ctrl(args...) do { } while (0)
+#define wpa_msg_global(args...) do { } while (0)
+#define wpa_msg_global_ctrl(args...) do { } while (0)
+#define wpa_msg_no_global(args...) do { } while (0)
+#define wpa_msg_global_only(args...) do { } while (0)
+#define wpa_msg_register_cb(f) do { } while (0)
+#define wpa_msg_register_ifname_cb(f) do { } while (0)
+#
+static inline int wpa_debug_reopen_file(void)
+{
+	return 0;
+}
 
 
 struct wpa_freq_range_list {
