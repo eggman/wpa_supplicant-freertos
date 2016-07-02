@@ -9,12 +9,12 @@
 #include "includes.h"
 
 #include "common.h"
-#include "crypto/md5.h"
-#include "crypto/sha1.h"
-#include "crypto/sha256.h"
-#include "crypto/sha384.h"
-#include "crypto/aes_wrap.h"
-#include "crypto/crypto.h"
+#include "md5.h"
+#include "sha1.h"
+//#include "crypto/sha256.h"
+//#include "crypto/sha384.h"
+#include "aes_wrap.h"
+#include "crypto.h"
 #include "ieee802_11_defs.h"
 #include "defs.h"
 #include "wpa_common.h"
@@ -67,7 +67,7 @@ unsigned int wpa_mic_len(int akmp)
 int wpa_eapol_key_mic(const u8 *key, size_t key_len, int akmp, int ver,
 		      const u8 *buf, size_t len, u8 *mic)
 {
-	u8 hash[SHA384_MAC_LEN];
+	u8 hash[SHA1_MAC_LEN];
 
 	switch (ver) {
 #ifndef CONFIG_FIPS
@@ -1026,7 +1026,7 @@ void rsn_pmkid(const u8 *pmk, size_t pmk_len, const u8 *aa, const u8 *spa,
 	char *title = "PMK Name";
 	const u8 *addr[3];
 	const size_t len[3] = { 8, ETH_ALEN, ETH_ALEN };
-	unsigned char hash[SHA256_MAC_LEN];
+	unsigned char hash[SHA1_MAC_LEN];
 
 	addr[0] = (u8 *) title;
 	addr[1] = aa;
