@@ -8,8 +8,8 @@
 
 #include "includes.h"
 
-#include "common/ieee802_11_defs.h"
 #include "common.h"
+#include "ieee802_11_defs.h"
 
 
 static int hex2num(char c)
@@ -260,6 +260,7 @@ void wpa_get_ntp_timestamp(u8 *buf)
  */
 int wpa_scnprintf(char *buf, size_t size, const char *fmt, ...)
 {
+#if 0
 	va_list ap;
 	int ret;
 
@@ -274,8 +275,9 @@ int wpa_scnprintf(char *buf, size_t size, const char *fmt, ...)
 		return 0;
 	if ((size_t) ret >= size)
 		return size - 1;
-
 	return ret;
+#endif
+    return 0;
 }
 
 
